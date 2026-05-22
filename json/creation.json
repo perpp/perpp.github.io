@@ -1,0 +1,44 @@
+[
+  {
+    "label": "Coding",
+    "type": "links",
+    "icon": "icon/svg/globe.svg",
+    "links": [
+      { "name": "GitHub", "url": "https://github.com" },
+      { "name": "Stack Overflow", "url": "https://stackoverflow.com" },
+      { "name": "W3Schools", "url": "https://www.w3schools.com" },
+      { "name": "CodePen", "url": "https://codepen.io" },
+      { "name": "Replit", "url": "https://replit.com" },
+      { "name": "VS Code", "url": "https://code.visualstudio.com" },
+      { "name": "MDN Web Docs", "url": "https://developer.mozilla.org" }
+    ]
+  },
+  {
+    "label": "GameDevelopment",
+    "type": "links",
+    "icon": "icon/svg/controller.svg",
+    "links": [
+      { "name": "Unity Learn", "url": "https://learn.unity.com" },
+      { "name": "Unreal Engine", "url": "https://www.unrealengine.com" },
+      { "name": "GameDev.net", "url": "https://www.gamedev.net" },
+      { "name": "itch.io", "url": "https://itch.io" },
+      { "name": "GDC Vault", "url": "https://www.gdcvault.com" },
+      { "name": "80.lv", "url": "https://80.lv" },
+      { "name": "Polycount", "url": "https://polycount.com" }
+    ]
+  },
+  {
+    "label": "Drawing & Design",
+    "type": "links",
+    "icon": "icon/svg/paintbrush.svg",
+    "links": [
+      { "name": "Figma", "url": "https://www.figma.com" },
+      { "name": "Dribbble", "url": "https://dribbble.com" },
+      { "name": "Behance", "url": "https://www.behance.net" },
+      { "name": "Inkscape", "url": "https://inkscape.org" },
+      { "name": "Canva", "url": "https://www.canva.com" },
+      { "name": "Pixlr", "url": "https://pixlr.com" },
+      { "name": "ArtStation", "url": "https://www.artstation.com" }
+    ]
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "label": "Travel",
+    "type": "links",
+    "icon": "icon/svg/suitcase.svg",
+    "links": [
+      { "name": "Google Maps", "url": "https://maps.google.com" },
+      { "name": "Skyscanner", "url": "https://www.skyscanner.net" },
+      { "name": "Booking.com", "url": "https://www.booking.com" },
+      { "name": "TripAdvisor", "url": "https://www.tripadvisor.com" },
+      { "name": "Rome2Rio", "url": "https://www.rome2rio.com" },
+      { "name": "Airbnb", "url": "https://www.airbnb.com" },
+      { "name": "Kayak", "url": "https://www.kayak.com" }
+    ]
+  },
+  {
+    "label": "Shopping",
+    "type": "links",
+    "icon": "icon/svg/shopping.svg",
+    "links": [
+      { "name": "Amazon", "url": "https://www.amazon.com" },
+      { "name": "eBay", "url": "https://www.ebay.com" },
+      { "name": "AliExpress", "url": "https://www.aliexpress.com" },
+      { "name": "Etsy", "url": "https://www.etsy.com" },
+      { "name": "Walmart", "url": "https://www.walmart.com" },
+      { "name": "Target", "url": "https://www.target.com" },
+      { "name": "Best Buy", "url": "https://www.bestbuy.com" }
+    ]
+  },
+  {
+    "label": "Tools",
+    "type": "links",
+    "icon": "icon/svg/wrench.svg",
+    "links": [
+      { "name": "Convertio", "url": "https://convertio.co" },
+      { "name": "Wolfram Alpha", "url": "https://www.wolframalpha.com" },
+      { "name": "DeepL Translator", "url": "https://www.deepl.com/translator" },
+      { "name": "Thesaurus.com", "url": "https://www.thesaurus.com" },
+      { "name": "Online OCR", "url": "https://www.onlineocr.net" },
+      { "name": "PDF24 Tools", "url": "https://tools.pdf24.org" },
+      { "name": "Time Zone Converter", "url": "https://www.timeanddate.com/worldclock/converter.html" }
+    ]
+  }
+]

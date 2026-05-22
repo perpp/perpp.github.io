@@ -1,0 +1,53 @@
+[
+  {
+    "label": "Media",
+    "type": "links",
+    "icon": "icon/svg/tv.svg",
+    "links": [
+      { "name": "Netflix", "url": "https://www.netflix.com" },
+      { "name": "YouTube", "url": "https://www.youtube.com" },
+      { "name": "Bilibili", "url": "https://www.bilibili.com" },
+      { "name": "Spotify", "url": "https://www.spotify.com" },
+      { "name": "Twitch", "url": "https://www.twitch.tv" },
+      { "name": "IMDb", "url": "https://www.imdb.com" },
+      { "name": "Hulu", "url": "https://www.hulu.com" },
+      { "name": "Disney+", "url": "https://www.disneyplus.com" },
+      { "name": "Vimeo", "url": "https://vimeo.com" },
+      { "name": "Crunchyroll", "url": "https://www.crunchyroll.com" }
+    ]
+  },
+  {
+    "label": "Games",
+    "type": "links",
+    "icon": "icon/svg/controller.svg",
+    "links": [
+      { "name": "SteamDB", "url": "https://steamdb.info" },
+      { "name": "Sporcle", "url": "https://www.sporcle.com" },
+      { "name": "IGDB", "url": "https://www.igdb.com" },
+      { "name": "Nexus Mods", "url": "https://www.nexusmods.com" },
+      { "name": "Steam Workshop", "url": "https://steamcommunity.com/workshop" },
+      { "name": "HowLongToBeat", "url": "https://howlongtobeat.com" },
+      { "name": "GOG", "url": "https://www.gog.com" },
+      { "name": "Epic Games Store", "url": "https://store.epicgames.com" },
+      { "name": "Mod DB", "url": "https://www.moddb.com" },
+      { "name": "Speedrun.com", "url": "https://www.speedrun.com" }
+    ]
+  },
+  {
+    "label": "Social",
+    "type": "links",
+    "icon": "icon/svg/question.svg",
+    "links": [
+      { "name": "Reddit", "url": "https://www.reddit.com" },
+      { "name": "Quora", "url": "https://www.quora.com" },
+      { "name": "Wikipedia", "url": "https://www.wikipedia.org" },
+      { "name": "Fandom", "url": "https://www.fandom.com" },
+      { "name": "Stack Exchange", "url": "https://stackexchange.com" },
+      { "name": "Medium", "url": "https://medium.com" },
+      { "name": "X (Twitter)", "url": "https://x.com" },
+      { "name": "Tumblr", "url": "https://www.tumblr.com" },
+      { "name": "Pinterest", "url": "https://www.pinterest.com" },
+      { "name": "Discord", "url": "https://discord.com" }
+    ]
+  }
+]

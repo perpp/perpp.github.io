@@ -1,0 +1,10 @@
+[
+  {
+    "label": "QuickAccess",
+    "type": "links",
+    "icon": "icon/svg/stars.svg",
+    "links": [
+      { "name": "aaa", "url": "https://www.aaa.com" }
+    ]
+  }
+]
