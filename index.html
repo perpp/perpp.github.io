@@ -391,18 +391,22 @@
         .hamburger-btn {
             display: none;
             position: fixed;
-            top: 15px;
-            left: 15px;
+            padding: 5px 5px 30px 5px;
+            top: 20px;
+            left: 10px;
             z-index: 10000;
             background: var(--color-text);
             color: var(--color-light);
             border: none;
-            font-size: 1.5rem;
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
+            font-size: 1.2rem;
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
             cursor: pointer;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+        .hamburger-btn:hover {
+            background: var(--color-opaquedark);
         }
 
         /* Overlay wrapper */
@@ -488,7 +492,7 @@
             }
 
             .ttabtext {
-                display: flex;
+                display: none;
             }
 
             /* ttab‑bar: keep horizontal, scrollable */
@@ -627,7 +631,8 @@
                                 alt="Utilities">
                             <p class="ttabtext">Utilities</p>
                         </button>
-                        <button class="ttab" data-ttab="4">📋 Log</button>
+                        <button class="ttab" data-ttab="4"><img src='icon/svg/notebook.svg' class="ttab-icon"
+                                alt="Utilities">Log</button>
                     </div>
                     <div class="main-body">
                         <div class="ctab-panel" id="ctabPanel"></div>
@@ -815,26 +820,25 @@
     });
 })();
         // Toggle overlay on small screens
-        (function () {
-            const hamburger = document.getElementById('tabHamburger');
-            const overlay = document.getElementById('tabOverlay');
-            const closeBtn = document.getElementById('tabOverlayClose');
+        // Toggle overlay on small screens
+(function () {
+    const hamburger = document.getElementById('tabHamburger');
+    const overlay = document.getElementById('tabOverlay');
+    const closeBtn = document.getElementById('tabOverlayClose');
 
-            if (hamburger && overlay && closeBtn) {
-                function openOverlay() {
-                    overlay.classList.add('open');
-                }
-                function closeOverlay() {
-                    overlay.classList.remove('open');
-                }
+    if (hamburger && overlay && closeBtn) {
+        function openOverlay() {
+            overlay.classList.add('open');
+        }
+        function closeOverlay() {
+            overlay.classList.remove('open');
+        }
 
-                hamburger.addEventListener('click', openOverlay);
-                closeBtn.addEventListener('click', closeOverlay);
-
-                // Close overlay when clicking outside the tab-container? Not necessary,
-                // but you can add an overlay background click if needed.
-            }
-        })();
+        hamburger.addEventListener('click', openOverlay);
+        hamburger.addEventListener('mouseenter', openOverlay);   // ← added hover
+        closeBtn.addEventListener('click', closeOverlay);
+    }
+})();
 
     </script>
 </body>
