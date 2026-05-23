@@ -2,6 +2,7 @@
   {
     "label": "QuickAccess",
     "type": "links",
+    "section": "json/qa.html",
     "icon": "icon/svg/stars.svg",
     "links": [
       {

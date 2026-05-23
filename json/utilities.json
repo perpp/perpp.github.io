@@ -2,7 +2,7 @@
   {
     "label": "Travel",
     "type": "links",
-    "icon": "icon/svg/suitcase.svg",
+    "icon": "icon/svg/train-subway.svg",
     "links": [
       { "name": "Google Maps", "url": "https://maps.google.com" },
       { "name": "Skyscanner", "url": "https://www.skyscanner.net" },
@@ -16,7 +16,7 @@
   {
     "label": "Shopping",
     "type": "links",
-    "icon": "icon/svg/shopping.svg",
+    "icon": "icon/svg/cart-shopping-fast.svg",
     "links": [
       { "name": "Amazon", "url": "https://www.amazon.com" },
       { "name": "eBay", "url": "https://www.ebay.com" },
@@ -30,7 +30,7 @@
   {
     "label": "Tools",
     "type": "links",
-    "icon": "icon/svg/wrench.svg",
+    "icon": "icon/svg/treasure-chest.svg",
     "links": [
       { "name": "Convertio", "url": "https://convertio.co" },
       { "name": "Wolfram Alpha", "url": "https://www.wolframalpha.com" },

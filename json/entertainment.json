@@ -2,7 +2,7 @@
   {
     "label": "Media",
     "type": "links",
-    "icon": "icon/svg/tv.svg",
+    "icon": "icon/svg/circle-play.svg",
     "links": [
       { "name": "Netflix", "url": "https://www.netflix.com" },
       { "name": "YouTube", "url": "https://www.youtube.com" },
@@ -19,7 +19,7 @@
   {
     "label": "Games",
     "type": "links",
-    "icon": "icon/svg/controller.svg",
+    "icon": "icon/svg/gaming-pad-alt-1.svg",
     "links": [
       { "name": "SteamDB", "url": "https://steamdb.info" },
       { "name": "Sporcle", "url": "https://www.sporcle.com" },
@@ -36,7 +36,7 @@
   {
     "label": "Social",
     "type": "links",
-    "icon": "icon/svg/question.svg",
+    "icon": "icon/svg/face-smile.svg",
     "links": [
       { "name": "Reddit", "url": "https://www.reddit.com" },
       { "name": "Quora", "url": "https://www.quora.com" },

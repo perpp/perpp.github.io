@@ -2,7 +2,7 @@
   {
     "label": "Coding",
     "type": "links",
-    "icon": "icon/svg/globe.svg",
+    "icon": "icon/svg/rectangle-terminal.svg",
     "links": [
       { "name": "GitHub", "url": "https://github.com" },
       { "name": "Stack Overflow", "url": "https://stackoverflow.com" },
@@ -14,9 +14,9 @@
     ]
   },
   {
-    "label": "GameDevelopment",
+    "label": "GameDesign",
     "type": "links",
-    "icon": "icon/svg/controller.svg",
+    "icon": "icon/svg/wand-magic-sparkles.svg",
     "links": [
       { "name": "Unity Learn", "url": "https://learn.unity.com" },
       { "name": "Unreal Engine", "url": "https://www.unrealengine.com" },
@@ -28,9 +28,9 @@
     ]
   },
   {
-    "label": "Drawing & Design",
+    "label": "Artwork",
     "type": "links",
-    "icon": "icon/svg/paintbrush.svg",
+    "icon": "icon/svg/pen-swirl.svg",
     "links": [
       { "name": "Figma", "url": "https://www.figma.com" },
       { "name": "Dribbble", "url": "https://dribbble.com" },
