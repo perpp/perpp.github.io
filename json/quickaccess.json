@@ -4,7 +4,30 @@
     "type": "links",
     "icon": "icon/svg/stars.svg",
     "links": [
-      { "name": "aaa", "url": "https://www.aaa.com" }
+      {
+        "name": "bilibili",
+        "url": "https://www.bilibili.com"
+      },
+      {
+        "name": "github",
+        "url": "https://www.github.com"
+      },
+      {
+        "name": "jiaowoban",
+        "url": "my.sjtu.edu.cn"
+      },
+      {
+        "name": "LatexSJTU",
+        "url": "https://latex.sjtu.edu.cn"
+      },
+      {
+        "name": "chatgpt",
+        "url": "https://chat.openai.com"
+      },
+      {
+        "name": "deepseek",
+        "url": "https://www.deepseek.com"
+      }
     ]
   }
 ]
