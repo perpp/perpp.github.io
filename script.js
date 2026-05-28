@@ -65,11 +65,14 @@ document.getElementById('searchForm').addEventListener('submit', function (e) {
 (function () {
     // --- Reusable helper: turn an array of {url, name} into HTML links ---
     function renderLinks(links) {
-        if (!Array.isArray(links)) return '';
-        return links.map(link =>
-            `<a class="hyperlinks" href="${link.url}" target="_blank" rel="noopener">${link.name}</a>`
-        ).join('');
-    }
+    if (!Array.isArray(links)) return '';
+    return links.map(link => {
+        const iconHtml = link.icon 
+            ? `<img src="${link.icon}" class="imgbutton" alt="" /> ` 
+            : '';
+        return `<a class="hyperlinks" href="${link.url}" target="_blank" rel="noopener">${iconHtml}${link.name}</a>`;
+    }).join('');
+}
 
     // --- Load all JSON data first, then initialize ---
     Promise.all([

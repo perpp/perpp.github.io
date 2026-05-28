@@ -2,32 +2,37 @@
   {
     "label": "QuickAccess",
     "type": "links",
-    "section": "json/qa.html",
     "icon": "icon/svg/stars.svg",
     "links": [
       {
         "name": "bilibili",
-        "url": "https://www.bilibili.com"
+        "url": "https://www.bilibili.com",
+        "icon": "icon/png/bilibili.png"
       },
       {
         "name": "github",
-        "url": "https://www.github.com"
+        "url": "https://www.github.com",
+        "icon": "icon/png/github.png"
       },
       {
-        "name": "jiaowoban",
-        "url": "my.sjtu.edu.cn"
+        "name": "my.sjtu",
+        "url": "https://my.sjtu.edu.cn",
+        "icon": "icon/png/SJTU.png"
       },
       {
-        "name": "LatexSJTU",
-        "url": "https://latex.sjtu.edu.cn"
+        "name": "tex.sjtu",
+        "url": "https://latex.sjtu.edu.cn",
+        "icon": "icon/png/latex.png"
       },
       {
         "name": "chatgpt",
-        "url": "https://chat.openai.com"
+        "url": "https://chat.openai.com",
+        "icon": "icon/chatgpt.png"
       },
       {
         "name": "deepseek",
-        "url": "https://chat.deepseek.com"
+        "url": "https://chat.deepseek.com",
+        "icon": "icon/png/deepseek.png"
       }
     ]
   }
