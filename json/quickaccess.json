@@ -5,11 +5,6 @@
     "icon": "icon/svg/stars.svg",
     "links": [
       {
-        "name": "bilibili",
-        "url": "https://www.bilibili.com",
-        "icon": "icon/png/bilibili.png"
-      },
-      {
         "name": "github",
         "url": "https://www.github.com",
         "icon": "icon/png/github.png"
@@ -22,7 +17,14 @@
       {
         "name": "tex.sjtu",
         "url": "https://latex.sjtu.edu.cn",
-        "icon": "icon/png/LaTex.png"
+        "icon": "icon/png/LaTex.png",
+        "app":true
+      },
+      {
+        "name": "bilibili",
+        "url": "https://www.bilibili.com",
+        "icon": "icon/png/bilibili.png",
+        "app":true
       },
       {
         "name": "chatgpt",

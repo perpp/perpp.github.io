@@ -70,7 +70,12 @@ document.getElementById('searchForm').addEventListener('submit', function (e) {
         const iconHtml = link.icon 
             ? `<img src="${link.icon}" class="imgbutton" alt="" /> ` 
             : '';
-        return `<a class="hyperlinks" href="${link.url}" target="_blank" rel="noopener">${iconHtml}${link.name}</a>`;
+        // Determine the anchor's class
+        let anchorClass = 'hyperlinks';
+        if (link.app) {
+            anchorClass += ' desktop-only';
+        }
+        return `<a class="${anchorClass}" href="${link.url}" target="_blank" rel="noopener">${iconHtml}${link.name}</a>`;
     }).join('');
 }
 
