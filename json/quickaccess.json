@@ -22,12 +22,12 @@
       {
         "name": "tex.sjtu",
         "url": "https://latex.sjtu.edu.cn",
-        "icon": "icon/png/latex.png"
+        "icon": "icon/png/LaTex.png"
       },
       {
         "name": "chatgpt",
         "url": "https://chat.openai.com",
-        "icon": "icon/chatgpt.png"
+        "icon": "icon/png/chatgpt.png"
       },
       {
         "name": "deepseek",
