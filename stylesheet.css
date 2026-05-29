@@ -450,7 +450,7 @@ button {
 }
 
 /* Small screens: hide tab section by default, show hamburger */
-@media(max-width: 999px) {
+@media(max-width: 500px) {
 
     /* ── Overlay & hamburger ─── */
     .tab-overlay {
