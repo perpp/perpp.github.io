@@ -12,13 +12,13 @@
       {
         "name": "my.sjtu",
         "url": "https://my.sjtu.edu.cn",
-        "icon": "icon/png/SJTU.png"
+        "icon": "icon/png/SJTU.png",
+        "app":true
       },
       {
         "name": "tex.sjtu",
         "url": "https://latex.sjtu.edu.cn",
-        "icon": "icon/png/LaTex.png",
-        "app":true
+        "icon": "icon/png/LaTex.png"
       },
       {
         "name": "bilibili",
