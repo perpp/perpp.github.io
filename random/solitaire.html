@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Round Solitaire | Double‑click to Collect | Top‑right Labels</title>
+    <style>
+        * {
+            user-select: none;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #1a4d2a 0%, #0e3a1f 100%);
+            font-family: 'Segoe UI', 'Roboto', 'Trebuchet MS', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .game-container {
+            background: rgba(0, 20, 5, 0.6);
+            border-radius: 48px;
+            padding: 20px 24px 28px 24px;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.4), inset 0 1px 2px rgba(255,255,255,0.1);
+            backdrop-filter: blur(2px);
+        }
+
+        .game-panel {
+            background: #2a6b3c;
+            border-radius: 32px;
+            padding: 20px;
+            box-shadow: inset 0 0 8px #1c4528, 0 12px 20px rgba(0,0,0,0.3);
+        }
+
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            background: #f9eed7;
+            padding: 10px 24px;
+            border-radius: 60px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+            gap: 12px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .stats {
+            display: flex;
+            gap: 24px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            font-family: monospace;
+            background: #2c2c2c;
+            padding: 5px 18px;
+            border-radius: 40px;
+            color: #f9e0a0;
+        }
+
+        .stats span {
+            color: #ffd966;
+            font-size: 1.3rem;
+            margin-left: 6px;
+        }
+
+        .round-badge {
+            background: #3c2a1f;
+            padding: 5px 20px;
+            border-radius: 40px;
+            color: #ffcf9a;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .round-badge span {
+            color: #f3b33d;
+            font-size: 1.4rem;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        button {
+            background: #2d2b26;
+            border: none;
+            font-weight: bold;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 1rem;
+            cursor: pointer;
+            color: #f0e6c5;
+            box-shadow: 0 3px 0 #12100e;
+            transition: 0.07s linear;
+            font-family: inherit;
+        }
+
+        button:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 0 #12100e;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            transform: none;
+            cursor: not-allowed;
+        }
+
+        .reset-btn { background: #5e3a2b; color: #ffefcf; }
+        .undo-btn { background: #2c5a6e; }
+        .redo-btn { background: #2c5a6e; }
+
+        .top-area {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .foundations {
+            display: flex;
+            gap: 15px;
+            background: #2b5a38;
+            padding: 8px 16px;
+            border-radius: 36px;
+        }
+
+        .stock-waste {
+            display: flex;
+            gap: 20px;
+            background: #2b5a38;
+            padding: 8px 20px;
+            border-radius: 36px;
+        }
+
+        .pile {
+            background: #1f3f2a;
+            border-radius: 14px;
+            width: 95px;
+            height: 80px;
+            box-shadow: inset 0 0 0 2px #6e9f7a, 0 6px 10px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 8px 4px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .card {
+            width: 85px;
+            height: 120px;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid #222;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: 0.05s linear;
+            position: relative;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-start;
+            padding: 5px 5px 0 0;
+            font-weight: bold;
+            font-size: 1.4rem;
+            line-height: 1;
+        }
+
+        .card-face-down {
+            background: repeating-linear-gradient(45deg, #2f5e3a, #2f5e3a 12px, #1e4229 12px, #1e4229 24px);
+            color: #d4d4d4;
+            box-shadow: inset 0 0 0 2px #7aa77a;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            font-size: 2rem;
+        }
+
+        .card.selected {
+            box-shadow: 0 0 0 4px gold, 0 5px 12px black;
+            transform: scale(1.01);
+        }
+
+        .suit-heart, .suit-diamond { color: #c33; }
+        .suit-club, .suit-spade { color: #2c2c2c; }
+
+        .tableau-area {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 24px;
+        }
+
+        .tableau-pile {
+            width: 95px;
+            min-height: 500px;
+            background: #296a3b;
+            border-radius: 16px;
+            box-shadow: inset 0 0 0 2px #87b68f, 0 5px 10px black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 4px;
+            cursor: pointer;
+            gap: 0;
+        }
+
+        .tableau-pile .card {
+            margin-top: -100px;
+        }
+        .tableau-pile .card:first-child {
+            margin-top: 0;
+        }
+
+        .message-area {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            background: #e9dbbd;
+            display: inline-block;
+            width: auto;
+            padding: 4px 16px;
+            border-radius: 30px;
+            color: #2a471f;
+        }
+
+        .stack-count {
+            font-size: 0.7rem;
+            background: #2b2b1a;
+            color: #fdebb3;
+            border-radius: 20px;
+            padding: 0px 6px;
+            margin-top: 4px;
+        }
+
+        /* Waste cascade: newest card at lower‑right, older cards offset up‑left */
+        .waste-stack {
+            position: relative;
+            width: 85px;
+            height: 170px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .waste-card-stack {
+            position: absolute;
+            width: 85px;
+            height: 120px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-start;
+            padding: 8px 8px 0 0;
+            font-weight: bold;
+            font-size: 1.4rem;
+            transition: all 0.1s;
+        }
+        .waste-card-stack:nth-child(1) { top: 48px; left: 32px; z-index: 3; }
+        .waste-card-stack:nth-child(2) { top: 24px; left: 16px; z-index: 2; }
+        .waste-card-stack:nth-child(3) { top: 0px;  left: 0px;  z-index: 1; }
+        .waste-card-stack.card-face-down {
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            font-size: 2rem;
+        }
+    </style>
+</head>
+<body>
+<div class="game-container">
+    <div class="game-panel">
+        <div class="info-bar">
+            <div class="stats">
+                🃟 Moves: <span id="movesCount">0</span>
+                🏆 Score: <span id="scoreStat">0</span>
+            </div>
+            <div class="round-badge">
+                🔄 ROUND <span id="roundIndicator">1</span> / 3
+            </div>
+            <div class="button-group">
+                <button id="resetBtn" class="reset-btn">⟳ Reset</button>
+                <button id="undoBtn" class="undo-btn">↩ Undo</button>
+                <button id="redoBtn" class="redo-btn">↪ Redo</button>
+            </div>
+        </div>
+
+        <div class="top-area">
+            <div class="foundations" id="foundationsContainer"></div>
+            <div class="stock-waste">
+                <div class="pile" id="stockPile">
+                    <div class="card card-face-down">🃟</div>
+                    <div class="stack-count" id="stockCount"></div>
+                    <small>STOCK</small>
+                </div>
+                <div class="pile" id="wastePile">
+                    <div id="wasteStackContainer" class="waste-stack"></div>
+                    <div class="stack-count" id="wasteCount"></div>
+                    <small>WASTE (double‑click to collect)</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="tableau-area" id="tableauArea"></div>
+        <div id="gameMessage" class="message-area">♻️ Double‑click any face‑up card to send it to the foundation.</div>
+    </div>
+    <footer>⚡ Rounds: draw 3 → 2 → 1 cards. Recycle waste when stock empty → next round. 4th round ends game.</footer>
+</div>
+
+<script>
+    // ----- CARD MODEL -----
+    const SUITS = ['♥', '♦', '♣', '♠'];
+    const RANKS = ['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
+    const RANK_VAL = { 'A':1, '2':2, '3':3, '4':4, '5':5, '6':6, '7':7, '8':8, '9':9, '10':10, 'J':11, 'Q':12, 'K':13 };
+
+    class Card {
+        constructor(suit, rank, faceUp = true) {
+            this.suit = suit;
+            this.rank = rank;
+            this.faceUp = faceUp;
+        }
+        getColorClass() { return (this.suit === '♥' || this.suit === '♦') ? 'suit-heart' : 'suit-spade'; }
+        getValue() { return RANK_VAL[this.rank]; }
+    }
+
+    // ----- GLOBAL STATE -----
+    let gameState = {
+        tableau: [],
+        foundations: [[],[],[],[]],
+        stock: [],
+        waste: [],
+        round: 1,
+        moves: 0,
+        score: 0,
+        gameActive: true
+    };
+
+    let undoStack = [];
+    let redoStack = [];
+
+    function getDrawCountForRound(round) {
+        if (round === 1) return 3;
+        if (round === 2) return 2;
+        if (round === 3) return 1;
+        return 0;
+    }
+
+    // ----- CLONE & HISTORY -----
+    function cloneCard(c) { return new Card(c.suit, c.rank, c.faceUp); }
+    function clonePile(p) { return p.map(c => cloneCard(c)); }
+    function deepCloneState(state) {
+        return {
+            tableau: state.tableau.map(p => clonePile(p)),
+            foundations: state.foundations.map(p => clonePile(p)),
+            stock: clonePile(state.stock),
+            waste: clonePile(state.waste),
+            round: state.round,
+            moves: state.moves,
+            score: state.score,
+            gameActive: state.gameActive
+        };
+    }
+
+    function pushHistory() {
+        undoStack.push(deepCloneState(gameState));
+        redoStack = [];
+    }
+
+    function undo() {
+        if (undoStack.length === 0) return;
+        redoStack.push(deepCloneState(gameState));
+        gameState = deepCloneState(undoStack.pop());
+        renderGame();
+        updateUI();
+    }
+
+    function redo() {
+        if (redoStack.length === 0) return;
+        undoStack.push(deepCloneState(gameState));
+        gameState = deepCloneState(redoStack.pop());
+        renderGame();
+        updateUI();
+    }
+
+    function recordAndExecute(actionFn, ...args) {
+        if (!gameState.gameActive) {
+            showMessage("Game ended. Press Reset.");
+            return false;
+        }
+        pushHistory();
+        const result = actionFn(...args);
+        if (result !== false) {
+            gameState.moves++;
+            updateScoreFromFoundations();
+            renderGame();
+            updateUI();
+            checkGameEnd();
+        } else {
+            undoStack.pop();
+        }
+        return result;
+    }
+
+    function updateScoreFromFoundations() {
+        let total = 0;
+        for (let f of gameState.foundations) total += f.length;
+        gameState.score = total;
+    }
+
+    function updateUI() {
+        document.getElementById('movesCount').innerText = gameState.moves;
+        document.getElementById('scoreStat').innerText = gameState.score;
+        const roundSpan = document.getElementById('roundIndicator');
+        if (gameState.round >= 4) roundSpan.innerText = "END";
+        else roundSpan.innerText = gameState.round;
+        document.getElementById('stockCount').innerText = gameState.stock.length;
+        document.getElementById('wasteCount').innerText = gameState.waste.length;
+        if (gameState.round >= 4) showMessage("🏁 GAME OVER (round 4). Press Reset.");
+        else showMessage(`Round ${gameState.round} — draw ${getDrawCountForRound(gameState.round)} cards. Double‑click to collect.`);
+    }
+
+    function showMessage(msg) {
+        const msgDiv = document.getElementById('gameMessage');
+        if (msgDiv) msgDiv.innerText = msg;
+    }
+
+    // ----- CORE ACTIONS -----
+    function drawFromStock() {
+        if (!gameState.gameActive) return false;
+        if (gameState.round >= 4) return false;
+        if (gameState.stock.length === 0) {
+            return recycleWasteToStock();
+        }
+        const drawCount = getDrawCountForRound(gameState.round);
+        if (drawCount === 0) return false;
+        let drawn = 0;
+        for (let i = 0; i < drawCount; i++) {
+            if (gameState.stock.length === 0) break;
+            let card = gameState.stock.pop();
+            card.faceUp = true;
+            gameState.waste.push(card);
+            drawn++;
+        }
+        return drawn > 0;
+    }
+
+    function recycleWasteToStock() {
+        if (!gameState.gameActive) return false;
+        if (gameState.stock.length !== 0) return false;
+        if (gameState.waste.length === 0) {
+            showMessage("Stock & waste empty – cannot recycle.");
+            return false;
+        }
+        const recycledCards = [...gameState.waste].reverse();
+        for (let card of recycledCards) {
+            card.faceUp = false;
+            gameState.stock.push(card);
+        }
+        gameState.waste = [];
+
+        let nextRound = gameState.round + 1;
+        if (nextRound >= 4) {
+            gameState.round = 4;
+            gameState.gameActive = false;
+            showMessage("Round 4 reached! Game finished.");
+            renderGame();
+            return true;
+        } else {
+            gameState.round = nextRound;
+            showMessage(`⬆️ Advanced to Round ${gameState.round}: now draw ${getDrawCountForRound(gameState.round)} cards.`);
+            return true;
+        }
+    }
+
+    // Move validations
+    function isValidTableauMove(movingCards, destTopCard) {
+        if (!movingCards.length) return false;
+        const movingCard = movingCards[0];
+        if (!destTopCard) return movingCard.rank === 'K';
+        const diff = destTopCard.getValue() - movingCard.getValue();
+        const colorDiff = (movingCard.suit === '♥' || movingCard.suit === '♦') !== (destTopCard.suit === '♥' || destTopCard.suit === '♦');
+        return diff === 1 && colorDiff;
+    }
+
+    function moveTableauToTableau(srcPileIdx, cardIndex, destPileIdx) {
+        const srcPile = gameState.tableau[srcPileIdx];
+        if (cardIndex < 0 || cardIndex >= srcPile.length) return false;
+        const movingCards = srcPile.slice(cardIndex);
+        if (movingCards.length === 0) return false;
+        const destPile = gameState.tableau[destPileIdx];
+        const destTop = destPile.length > 0 ? destPile[destPile.length-1] : null;
+        if (!isValidTableauMove(movingCards, destTop)) return false;
+        gameState.tableau[destPileIdx].push(...movingCards);
+        gameState.tableau[srcPileIdx] = srcPile.slice(0, cardIndex);
+        if (gameState.tableau[srcPileIdx].length > 0) {
+            const newTop = gameState.tableau[srcPileIdx][gameState.tableau[srcPileIdx].length-1];
+            if (!newTop.faceUp) newTop.faceUp = true;
+        }
+        return true;
+    }
+
+    function moveWasteToTableau(destPileIdx) {
+        if (gameState.waste.length === 0) return false;
+        const wasteCard = gameState.waste[gameState.waste.length-1];
+        const destPile = gameState.tableau[destPileIdx];
+        const destTop = destPile.length > 0 ? destPile[destPile.length-1] : null;
+        if (!isValidTableauMove([wasteCard], destTop)) return false;
+        gameState.waste.pop();
+        gameState.tableau[destPileIdx].push(wasteCard);
+        return true;
+    }
+
+    function moveTableauToFoundation(srcPileIdx, cardIdx) {
+        const srcPile = gameState.tableau[srcPileIdx];
+        if (cardIdx !== srcPile.length-1) return false;
+        const card = srcPile[srcPile.length-1];
+        if (!card.faceUp) return false;
+        const suitIdx = SUITS.indexOf(card.suit);
+        const foundation = gameState.foundations[suitIdx];
+        let expectedRank = foundation.length === 0 ? 1 : foundation[foundation.length-1].getValue() + 1;
+        if (card.getValue() === expectedRank) {
+            gameState.tableau[srcPileIdx].pop();
+            gameState.foundations[suitIdx].push(card);
+            if (gameState.tableau[srcPileIdx].length > 0) {
+                let newTop = gameState.tableau[srcPileIdx][gameState.tableau[srcPileIdx].length-1];
+                if (!newTop.faceUp) newTop.faceUp = true;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    function moveWasteToFoundation() {
+        if (gameState.waste.length === 0) return false;
+        const card = gameState.waste[gameState.waste.length-1];
+        const suitIdx = SUITS.indexOf(card.suit);
+        const foundation = gameState.foundations[suitIdx];
+        let expectedRank = foundation.length === 0 ? 1 : foundation[foundation.length-1].getValue() + 1;
+        if (card.getValue() === expectedRank) {
+            gameState.waste.pop();
+            gameState.foundations[suitIdx].push(card);
+            return true;
+        }
+        return false;
+    }
+
+    // ----- DOUBLE-CLICK COLLECT HELPERS -----
+    function tryCollectTableauCard(pileIdx, cardIdx) {
+        // only top card of a pile can be collected (standard solitaire)
+        const pile = gameState.tableau[pileIdx];
+        if (cardIdx !== pile.length-1) return false;
+        return moveTableauToFoundation(pileIdx, cardIdx);
+    }
+
+    function tryCollectWasteCard() {
+        return moveWasteToFoundation();
+    }
+
+    // ----- INITIALIZATION -----
+    function createShuffledDeck() {
+        let deck = [];
+        for (let suit of SUITS) {
+            for (let rank of RANKS) deck.push(new Card(suit, rank, false));
+        }
+        for (let i = deck.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [deck[i], deck[j]] = [deck[j], deck[i]];
+        }
+        return deck;
+    }
+
+    function resetGame() {
+        const deck = createShuffledDeck();
+        let tableau = [[],[],[],[],[],[],[]];
+        let idx = 0;
+        for (let i = 0; i < 7; i++) {
+            for (let j = 0; j <= i; j++) {
+                let card = deck[idx++];
+                card.faceUp = (j === i);
+                tableau[i].push(card);
+            }
+        }
+        const remainingStock = deck.slice(idx);
+        remainingStock.forEach(c => c.faceUp = false);
+        gameState = {
+            tableau: tableau,
+            foundations: [[],[],[],[]],
+            stock: remainingStock,
+            waste: [],
+            round: 1,
+            moves: 0,
+            score: 0,
+            gameActive: true
+        };
+        undoStack = [];
+        redoStack = [];
+        renderGame();
+        updateUI();
+    }
+
+    // ----- RENDER -----
+    let selectedSource = null;
+    function clearSelected() { selectedSource = null; }
+
+    function createCardElement(card, extraClass = "") {
+        const div = document.createElement('div');
+        div.className = `card ${extraClass}`;
+        if (!card.faceUp) {
+            div.classList.add('card-face-down');
+            div.innerText = "?";
+            return div;
+        }
+        div.innerText = `${card.rank}${card.suit}`;
+        div.classList.add(card.getColorClass());
+        return div;
+    }
+
+    function renderGame() {
+        // Foundations
+        const foundationsDiv = document.getElementById('foundationsContainer');
+        foundationsDiv.innerHTML = '';
+        SUITS.forEach((suit, idx) => {
+            const pileDiv = document.createElement('div');
+            pileDiv.className = 'pile';
+            const pile = gameState.foundations[idx];
+            if (pile.length === 0) {
+                const emptyDiv = document.createElement('div');
+                emptyDiv.className = 'card card-face-down';
+                emptyDiv.style.background = '#c7b28b';
+                emptyDiv.innerText = suit;
+                emptyDiv.style.fontSize = '2rem';
+                pileDiv.appendChild(emptyDiv);
+            } else {
+                pileDiv.appendChild(createCardElement(pile[pile.length-1]));
+            }
+            pileDiv.dataset.foundationIdx = idx;
+            pileDiv.addEventListener('click', (e) => { e.stopPropagation(); onFoundationClick(idx); });
+            foundationsDiv.appendChild(pileDiv);
+        });
+
+        // Stock
+        const stockDiv = document.getElementById('stockPile');
+        const oldStockCard = stockDiv.querySelector('.card:not(.stack-count)');
+        if (oldStockCard) oldStockCard.remove();
+        const stockCardDiv = document.createElement('div');
+        stockCardDiv.className = 'card card-face-down';
+        stockCardDiv.innerText = gameState.stock.length ? '🃟' : '📤';
+        stockCardDiv.style.fontSize = '2rem';
+        stockDiv.prepend(stockCardDiv);
+
+        // Waste cascade
+        const wasteContainer = document.getElementById('wasteStackContainer');
+        wasteContainer.innerHTML = '';
+        const wasteLen = gameState.waste.length;
+        const start = Math.max(0, wasteLen - 3);
+        const visibleCards = [];
+        for (let i = start; i < wasteLen; i++) {
+            visibleCards.push(gameState.waste[i]);
+        }
+        const reversed = [...visibleCards].reverse();
+        for (let i = 0; i < reversed.length; i++) {
+            const card = reversed[i];
+            const cardElem = createCardElement(card, "waste-card-stack");
+            if (i === 0) {
+                cardElem.addEventListener('click', (e) => { e.stopPropagation(); onWasteClick(); });
+                cardElem.addEventListener('dblclick', (e) => { e.stopPropagation(); onWasteDoubleClick(); });
+            }
+            wasteContainer.appendChild(cardElem);
+        }
+        if (wasteLen === 0) {
+            const placeholder = document.createElement('div');
+            placeholder.className = 'card card-face-down waste-card-stack';
+            placeholder.innerText = '♻️';
+            placeholder.style.opacity = '0.4';
+            wasteContainer.appendChild(placeholder);
+        }
+
+        // Tableau with overlapping cascade and double-click support
+        const tableauArea = document.getElementById('tableauArea');
+        tableauArea.innerHTML = '';
+        for (let i = 0; i < 7; i++) {
+            const pileDiv = document.createElement('div');
+            pileDiv.className = 'tableau-pile';
+            pileDiv.dataset.tableauIdx = i;
+            const cards = gameState.tableau[i];
+            for (let j = 0; j < cards.length; j++) {
+                const cardElem = createCardElement(cards[j]);
+                cardElem.dataset.cardIdx = j;
+                cardElem.dataset.pileIdx = i;
+                cardElem.addEventListener('click', (e) => { e.stopPropagation(); onTableauCardClick(i, j); });
+                cardElem.addEventListener('dblclick', (e) => { e.stopPropagation(); onTableauDoubleClick(i, j); });
+                pileDiv.appendChild(cardElem);
+            }
+            if (cards.length === 0) pileDiv.classList.add('empty-pile');
+            pileDiv.addEventListener('click', (e) => {
+                if (e.target === pileDiv || (e.target.classList && e.target.classList.contains('tableau-pile'))) {
+                    onEmptyTableauClick(i);
+                }
+            });
+            tableauArea.appendChild(pileDiv);
+        }
+
+        // Highlight selected
+        document.querySelectorAll('.card.selected').forEach(c => c.classList.remove('selected'));
+        if (selectedSource) {
+            if (selectedSource.type === 'tableau') {
+                const targetPile = tableauArea.children[selectedSource.pileIdx];
+                const targetCard = targetPile?.children[selectedSource.cardIdx];
+                if (targetCard) targetCard.classList.add('selected');
+            } else if (selectedSource.type === 'waste') {
+                const wasteTop = wasteContainer.firstChild;
+                if (wasteTop && wasteTop.classList) wasteTop.classList.add('selected');
+            }
+        }
+        updateUI();
+    }
+
+    // ----- EVENT HANDLERS (with double-click)-----
+    function onTableauCardClick(pileIdx, cardIdx) {
+        if (!gameState.gameActive) return;
+        const card = gameState.tableau[pileIdx][cardIdx];
+        if (!card.faceUp) return;
+        if (selectedSource === null) {
+            selectedSource = { type: 'tableau', pileIdx, cardIdx };
+            renderGame();
+            return;
+        }
+        if (selectedSource.type === 'tableau') {
+            recordAndExecute(() => moveTableauToTableau(selectedSource.pileIdx, selectedSource.cardIdx, pileIdx));
+        } else if (selectedSource.type === 'waste') {
+            recordAndExecute(() => moveWasteToTableau(pileIdx));
+        }
+        clearSelected();
+        renderGame();
+    }
+
+    function onTableauDoubleClick(pileIdx, cardIdx) {
+        if (!gameState.gameActive) return;
+        const card = gameState.tableau[pileIdx][cardIdx];
+        if (!card.faceUp) return;
+        // Only the top card of a pile can be collected
+        if (cardIdx !== gameState.tableau[pileIdx].length - 1) return;
+        recordAndExecute(() => tryCollectTableauCard(pileIdx, cardIdx));
+        clearSelected();
+        // After move, re-render already handled in recordAndExecute
+    }
+
+    function onWasteDoubleClick() {
+        if (!gameState.gameActive) return;
+        if (gameState.waste.length === 0) return;
+        recordAndExecute(() => tryCollectWasteCard());
+        clearSelected();
+    }
+
+    function onEmptyTableauClick(pileIdx) {
+        if (!gameState.gameActive) return;
+        if (selectedSource === null) return;
+        if (selectedSource.type === 'tableau') {
+            recordAndExecute(() => moveTableauToTableau(selectedSource.pileIdx, selectedSource.cardIdx, pileIdx));
+        } else if (selectedSource.type === 'waste') {
+            recordAndExecute(() => moveWasteToTableau(pileIdx));
+        }
+        clearSelected();
+        renderGame();
+    }
+
+    function onFoundationClick(foundationIdx) {
+        if (!gameState.gameActive) return;
+        if (selectedSource === null) return;
+        if (selectedSource.type === 'tableau') {
+            recordAndExecute(() => moveTableauToFoundation(selectedSource.pileIdx, selectedSource.cardIdx));
+        } else if (selectedSource.type === 'waste') {
+            recordAndExecute(() => moveWasteToFoundation());
+        }
+        clearSelected();
+        renderGame();
+    }
+
+    function onStockClick() {
+        if (!gameState.gameActive && gameState.round>=4) {
+            showMessage("Game ended. Press Reset.");
+            return;
+        }
+        recordAndExecute(() => drawFromStock());
+        clearSelected();
+        renderGame();
+    }
+
+    function onWasteClick() {
+        if (!gameState.gameActive) return;
+        if (gameState.waste.length === 0) return;
+        if (selectedSource === null) {
+            selectedSource = { type: 'waste' };
+            renderGame();
+            return;
+        }
+        if (selectedSource.type === 'waste') {
+            recordAndExecute(() => moveWasteToFoundation());
+        }
+        clearSelected();
+        renderGame();
+    }
+
+    function checkGameEnd() {
+        let totalCards = gameState.foundations.reduce((a,b) => a+b.length, 0);
+        if (totalCards === 52) showMessage("🏆 VICTORY! You completed all foundations!");
+    }
+
+    // Event binding
+    document.getElementById('stockPile').addEventListener('click', (e) => { e.stopPropagation(); onStockClick(); });
+    document.getElementById('resetBtn').addEventListener('click', () => resetGame());
+    document.getElementById('undoBtn').addEventListener('click', () => undo());
+    document.getElementById('redoBtn').addEventListener('click', () => redo());
+
+    resetGame();
+</script>
+</body>
+</html>
