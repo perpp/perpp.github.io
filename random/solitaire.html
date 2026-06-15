@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Round Solitaire | Double‑click to Collect | Top‑right Labels</title>
+    <title>Round Solitaire | Double‑click to Collect | Clean Win</title>
     <style>
         * {
             user-select: none;
@@ -52,6 +52,7 @@
         .stats {
             display: flex;
             gap: 24px;
+            width:400px;
             font-weight: bold;
             font-size: 1.2rem;
             font-family: monospace;
@@ -426,13 +427,39 @@
         else roundSpan.innerText = gameState.round;
         document.getElementById('stockCount').innerText = gameState.stock.length;
         document.getElementById('wasteCount').innerText = gameState.waste.length;
-        if (gameState.round >= 4) showMessage("🏁 GAME OVER (round 4). Press Reset.");
-        else showMessage(`Round ${gameState.round} — draw ${getDrawCountForRound(gameState.round)} cards. Double‑click to collect.`);
+        if (gameState.round >= 4 && gameState.gameActive) showMessage("🏁 GAME OVER (round 4). Press Reset.");
+        else if (!gameState.gameActive) {
+            // message already set by win condition, keep it
+        } else showMessage(`Round ${gameState.round} — draw ${getDrawCountForRound(gameState.round)} cards. Double‑click to collect.`);
     }
 
     function showMessage(msg) {
         const msgDiv = document.getElementById('gameMessage');
         if (msgDiv) msgDiv.innerText = msg;
+    }
+
+    // ----- WIN CONDITIONS -----
+    function isCleanWin() {
+        // All tableau cards face-up, stock empty, waste empty
+        for (let pile of gameState.tableau) {
+            for (let card of pile) {
+                if (!card.faceUp) return false;
+            }
+        }
+        return gameState.stock.length === 0 && gameState.waste.length === 0;
+    }
+
+    function checkGameEnd() {
+        let totalCards = gameState.foundations.reduce((a,b) => a+b.length, 0);
+        if (totalCards === 52) {
+            showMessage("🏆 VICTORY! You completed all foundations!");
+            gameState.gameActive = false;
+        } else if (isCleanWin()) {
+            showMessage("✨ CLEAN VICTORY! All cards face up with empty stock & waste! ✨");
+            gameState.gameActive = false;
+        }
+        // If game ended, render one final time to show disabled look (no further moves allowed)
+        if (!gameState.gameActive) renderGame();
     }
 
     // ----- CORE ACTIONS -----
@@ -557,7 +584,6 @@
 
     // ----- DOUBLE-CLICK COLLECT HELPERS -----
     function tryCollectTableauCard(pileIdx, cardIdx) {
-        // only top card of a pile can be collected (standard solitaire)
         const pile = gameState.tableau[pileIdx];
         if (cardIdx !== pile.length-1) return false;
         return moveTableauToFoundation(pileIdx, cardIdx);
@@ -749,11 +775,9 @@
         if (!gameState.gameActive) return;
         const card = gameState.tableau[pileIdx][cardIdx];
         if (!card.faceUp) return;
-        // Only the top card of a pile can be collected
         if (cardIdx !== gameState.tableau[pileIdx].length - 1) return;
         recordAndExecute(() => tryCollectTableauCard(pileIdx, cardIdx));
         clearSelected();
-        // After move, re-render already handled in recordAndExecute
     }
 
     function onWasteDoubleClick() {
@@ -810,11 +834,6 @@
         }
         clearSelected();
         renderGame();
-    }
-
-    function checkGameEnd() {
-        let totalCards = gameState.foundations.reduce((a,b) => a+b.length, 0);
-        if (totalCards === 52) showMessage("🏆 VICTORY! You completed all foundations!");
     }
 
     // Event binding
