@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Round Solitaire | Double‑click to Collect | Clean Win</title>
+    <title>Round Solitaire | Double‑click to Collect | Clean Win Score</title>
     <style>
         * {
             user-select: none;
@@ -33,6 +33,7 @@
             background: #2a6b3c;
             border-radius: 32px;
             padding: 20px;
+            width: max(900px, min(90%, 1000px));
             box-shadow: inset 0 0 8px #1c4528, 0 12px 20px rgba(0,0,0,0.3);
         }
 
@@ -191,7 +192,14 @@
 
         .suit-heart, .suit-diamond { color: #c33; }
         .suit-club, .suit-spade { color: #2c2c2c; }
-
+/* Hide the rank+suit text and show a centered image on all face-up cards */
+.card:not(.card-face-down) {
+    background-image: url('play.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* or use font-size: 0; if you prefer */
+}
         .tableau-area {
             display: flex;
             gap: 8px;
@@ -257,7 +265,6 @@
             position: absolute;
             width: 85px;
             height: 120px;
-            background: white;
             border-radius: 10px;
             box-shadow: 0 3px 6px rgba(0,0,0,0.2);
             display: flex;
@@ -454,9 +461,15 @@
         if (totalCards === 52) {
             showMessage("🏆 VICTORY! You completed all foundations!");
             gameState.gameActive = false;
+            gameState.score = 52; // full score
+            updateUI(); // refresh score display
         } else if (isCleanWin()) {
-            showMessage("✨ CLEAN VICTORY! All cards face up with empty stock & waste! ✨");
+            // Clean win: all cards are face up and stock/waste empty
+            // Set score to 52 (all cards accounted for) 
+            gameState.score = 52;
+            showMessage("✨ CLEAN VICTORY! All cards face up with empty stock & waste! Score: 52 ✨");
             gameState.gameActive = false;
+            updateUI(); // update score display
         }
         // If game ended, render one final time to show disabled look (no further moves allowed)
         if (!gameState.gameActive) renderGame();
