@@ -866,6 +866,8 @@
             }, 300);
         }
 
+        
+
         function onEmptyTableauClick(pileIdx) {
             if (!gameState.gameActive) return;
             if (selectedSource === null) return;
@@ -899,21 +901,19 @@
             clearSelected();
             renderGame();
         }
-
-        function onWasteClick() {
-            if (!gameState.gameActive) return;
-            if (gameState.waste.length === 0) return;
-            if (selectedSource === null) {
-                selectedSource = { type: 'waste' };
-                renderGame();
-                return;
-            }
-            if (selectedSource.type === 'waste') {
-                recordAndExecute(() => moveWasteToFoundation());
-            }
-            clearSelected();
-            renderGame();
-        }
+function onWasteClick() {
+    if (!gameState.gameActive) return;
+    if (gameState.waste.length === 0) return;
+    if (selectedSource === null) {
+        selectedSource = { type: 'waste' };
+        renderGame();
+    } else if (selectedSource.type === 'waste') {
+        // Clicking waste again deselects it
+        clearSelected();
+        renderGame();
+    }
+    // If selectedSource is something else, ignore (don't interfere)
+}
 
         // Event binding
         document.getElementById('stockPile').addEventListener('click', (e) => { e.stopPropagation(); onStockClick(); });
