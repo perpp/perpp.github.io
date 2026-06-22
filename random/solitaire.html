@@ -853,11 +853,17 @@
             clearSelected();
         }
 
+        let wasteDoubleClickTimeout = null;
+
         function onWasteDoubleClick() {
             if (!gameState.gameActive) return;
             if (gameState.waste.length === 0) return;
+            if (wasteDoubleClickTimeout) return;
             recordAndExecute(() => tryCollectWasteCard());
             clearSelected();
+            wasteDoubleClickTimeout = setTimeout(() => {
+                wasteDoubleClickTimeout = null;
+            }, 300);
         }
 
         function onEmptyTableauClick(pileIdx) {
